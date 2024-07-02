@@ -1,14 +1,60 @@
-export default function PostList({ posts }) {
+import { useEffect, useState } from 'react';
+import { getAllPost } from '../api/postsAPI';
+import LoadingSpinner from './utils/Loading';
+import NoContent from './utils/NoContent';
+import { getUserInfo } from '../api/usersAPI';
+import clsx from 'clsx';
+
+export default function PostList() {
+	const [posts, setPosts] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		const fetchPostsAndUsers = async () => {
+			try {
+				const postsData = await getAllPost();
+
+				const postsWithAvatars = await Promise.all(
+					postsData.map(async (post) => {
+						const userInfo = await getUserInfo(post.author);
+						return { ...post, avatar: userInfo.avatar };
+					})
+				);
+
+				setPosts(postsWithAvatars);
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		fetchPostsAndUsers();
+	}, []);
+
+	if (isLoading) {
+		return <LoadingSpinner />;
+	}
+
+	if (!isLoading && posts.length === 0) {
+		return <NoContent />;
+	}
+
+	console.log(posts);
+
 	return (
 		<div id="posts-lists">
-			{posts.map((post) => (
+			{posts.map((post, index) => (
 				<div key={post._id} className="mb-1">
 					<div className="card border-light-subtle">
-						<div id="image-first-post">
+						<div
+							className={clsx('', {
+								'd-none': index !== 0,
+							})}>
 							<img
 								className="card-img-top object-fit-cover"
-								src="https://picsum.photos/id/84/650/275"
-								alt="Principios básicos de diseño UI/UX para desarrolladores web"
+								src={post.image}
+								alt={post.title}
 								height="275"
 							/>
 						</div>
@@ -17,8 +63,8 @@ export default function PostList({ posts }) {
 								<div className="d-flex align-items-center lh-1 fs-6">
 									<div className="me-2">
 										<img
-											src="https://avataaars.io/?avatarStyle=Circle&amp;topType=WinterHat3&amp;accessoriesType=Round&amp;hatColor=PastelGreen&amp;hairColor=BrownDark&amp;facialHairType=BeardLight&amp;facialHairColor=BrownDark&amp;clotheType=BlazerShirt&amp;clotheColor=Blue02&amp;eyeType=Happy&amp;eyebrowType=DefaultNatural&amp;mouthType=Grimace&amp;skinColor=Tanned"
-											alt="undefined"
+											src={post.avatar}
+											alt={post.author}
 											className="rounded-circle"
 											width="32"
 											height="32"
@@ -27,7 +73,11 @@ export default function PostList({ posts }) {
 									<div>
 										<p className="m-0 pb-1 fw-medium text-capitalize"></p>
 										<span className="fw-light">
-											2024-06-28T19:52:10.353Z
+											{post.created_at
+												.slice(0, 10)
+												.split('-')
+												.reverse()
+												.join('/')}
 										</span>
 									</div>
 								</div>
@@ -38,26 +88,18 @@ export default function PostList({ posts }) {
 										href="../../views/guestDetails.html?id=667f146a1269ca1650c98ca0"
 										className="text-decoration-none">
 										<h2 className="mb-1 fs-4 fw-bold px-2 text-discuss">
-											Principios básicos de diseño UI/UX
-											para desarrolladores web
+											{post.title}
 										</h2>
 									</a>
 									<div className="mb-2 d-flex flex-wrap gap-1">
-										<a
-											href="../../views/tags.html?tag=UI"
-											className="text-decoration-none text-secondary px-2 py-1 tags-post rounded">
-											#UI
-										</a>
-										<a
-											href="../../views/tags.html?tag=UX"
-											className="text-decoration-none text-secondary px-2 py-1 tags-post rounded">
-											#UX
-										</a>
-										<a
-											href="../../views/tags.html?tag=diseñoWeb"
-											className="text-decoration-none text-secondary px-2 py-1 tags-post rounded">
-											#diseñoWeb
-										</a>
+										{post.tags.map((tag) => (
+											<a
+												key={tag}
+												href="../../views/tags.html?tag=UI"
+												className="text-decoration-none text-secondary px-2 py-1 tags-post rounded">
+												#{tag}
+											</a>
+										))}
 									</div>
 								</div>
 								<div className="d-flex justify-content-between align-items-center fs-6 lh-1 py-2">
@@ -107,7 +149,8 @@ export default function PostList({ posts }) {
 												</span>
 												<span className="ms-3">
 													<span className="hidden s:inline">
-														48 reactions
+														{post.numReactions}{' '}
+														reactions
 													</span>
 												</span>
 											</div>
@@ -115,13 +158,17 @@ export default function PostList({ posts }) {
 										<a
 											href="#"
 											className="text-decoration-none text-dark py-1 px-2 rounded btn-comments d-flex align-items-center">
-											<i className="bi bi-chat me-2"></i>
+											{post.numComments}
+											<i className="bi bi-chat mx-1 me-2">
+												{' '}
+											</i>
 											<span>Add Comment</span>
 										</a>
 									</div>
 									<div className="d-flex align-items-center fw-light">
 										<p className="mb-0 me-2">
-											8<span> minutos</span>
+											{post.readingTime}{' '}
+											<span> minutos</span>
 										</p>
 										<button
 											className="btn border-0 p-0"
