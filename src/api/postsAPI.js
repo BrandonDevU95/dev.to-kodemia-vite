@@ -73,10 +73,10 @@ const getAllTags = async () => {
 };
 
 const getLastPosts = async (numPost) => {
-	let response = await fetch(`${URL_SERVER}/posts/last-posts/${numPost}`);
+	const response = await fetch(`${URL_SERVER}/posts/last-posts/${numPost}`);
 	if (!response.ok) return null;
-	let { data } = await response.json();
-	return data;
+	const data = await response.json();
+	return data.data;
 };
 
 const getAllCategories = async () => {
