@@ -1,3 +1,10 @@
+import Navbar from '../components/Navbar';
+
 export default function MainLayout({ children }) {
-	return <>{children}</>;
+	return (
+		<>
+			<Navbar />
+			{children}
+		</>
+	);
 }
