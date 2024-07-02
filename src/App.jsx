@@ -28,9 +28,20 @@ function App() {
 						</div>
 						<div className="col">
 							<aside className="d-grid gap-3">
-								<LastPostRight title="Discussion threads targeting the whole community" />
-								<LastPostRight title="Light, and off-topic conversation." />
-								<TrendListRight title="trending guides/resources" />
+								<LastPostRight
+									title="Discussion threads targeting the whole community"
+									start={0}
+									end={5}
+								/>
+								<LastPostRight
+									title="Light, and off-topic conversation."
+									start={5}
+									end={10}
+								/>
+								<TrendListRight
+									title="trending guides/resources"
+									numPosts={10}
+								/>
 								<TrendListRight title="recently queried" />
 							</aside>
 						</div>
