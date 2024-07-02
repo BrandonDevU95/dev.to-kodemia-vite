@@ -1,4 +1,27 @@
-export default function PopularTags({ tags }) {
+import { useEffect, useState } from 'react';
+import { getAllTags } from '../../api/postsAPI.js';
+import LoadingSpinner from '../utils/Loading.jsx';
+import NoContent from '../utils/NoContent.jsx';
+
+export default function PopularTags() {
+	const [tags, setTags] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		getAllTags()
+			.then((data) => setTags(data))
+			.catch((error) => console.error(error));
+		setIsLoading(false);
+	}, []);
+
+	if (isLoading) {
+		return <LoadingSpinner />;
+	}
+
+	if (!isLoading && tags.length === 0) {
+		return <NoContent />;
+	}
+
 	return (
 		<nav className="mb-4">
 			<h3 className="fs-6 fw-bold text-start p-2">Popular Tags</h3>
