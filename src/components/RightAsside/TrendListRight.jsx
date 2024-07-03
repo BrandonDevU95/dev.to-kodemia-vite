@@ -1,22 +1,18 @@
 import { useEffect, useState } from 'react';
-import { getAllCategories, getPostsMoreReactions } from '../../api/postsAPI';
+
+import { Link } from 'react-router-dom';
 import LoadingSpinner from '../utils/Loading';
 import NoContent from '../utils/NoContent';
+import { getPostsMoreReactions } from '../../api/postsAPI';
 
 export default function TrendListRight({ title, numPosts }) {
 	const [posts, setPosts] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		if (numPosts) {
-			getPostsMoreReactions(numPosts).then((data) => {
-				setPosts(data);
-			});
-		} else {
-			getAllCategories().then((data) => {
-				setPosts(data);
-			});
-		}
+		getPostsMoreReactions(numPosts).then((data) => {
+			setPosts(data);
+		});
 		setIsLoading(false);
 	}, [numPosts]);
 
@@ -34,13 +30,13 @@ export default function TrendListRight({ title, numPosts }) {
 				<h3 className="m-0 text-lowercase fs-6 text-dark">{title}</h3>
 			</header>
 			<div id="trends-list">
-				{posts.map((post, index) => (
-					<div key={index} className="ms-3">
-						<a
-							href="../../views/guestDetails.html?id=667f14671269ca1650c98c76"
+				{posts.map((post) => (
+					<div key={post._id} className="ms-3">
+						<Link
+							to={`/post-detail/${post._id}`}
 							className="d-block text-decoration-none text-secondary widget rounded">
-							{numPosts ? post.title : post}
-						</a>
+							{post.title}
+						</Link>
 					</div>
 				))}
 			</div>
