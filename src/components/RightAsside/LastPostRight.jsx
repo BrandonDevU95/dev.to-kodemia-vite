@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { getLastPosts } from '../../api/postsAPI';
+
+import { Link } from 'react-router-dom';
 import LoadingSpinner from '../utils/Loading';
 import NoContent from '../utils/NoContent';
+import { getLastPosts } from '../../api/postsAPI';
 
 export default function LastPostRight({ title, start, end }) {
 	const [posts, setPosts] = useState([]);
@@ -41,8 +43,8 @@ export default function LastPostRight({ title, start, end }) {
 					<div
 						key={post._id}
 						className="p-3 border-bottom border-light">
-						<a
-							href="../../views/guestDetails.html?id=667f146a1269ca1650c98ca0"
+						<Link
+							to={`/post-detail/${post._id}`}
 							className="text-decoration-none text-discuss">
 							<p className="m-0">
 								{post.title.length > 40
@@ -52,7 +54,7 @@ export default function LastPostRight({ title, start, end }) {
 							<span className="pt-1 fs-6 text-secondary">
 								{post.numComments} comments
 							</span>
-						</a>
+						</Link>
 					</div>
 				))}
 			</div>
