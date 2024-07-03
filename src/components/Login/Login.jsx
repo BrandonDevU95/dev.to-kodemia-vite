@@ -1,9 +1,12 @@
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastError, ToastSuccess } from '../utils/notifications';
+import { decodeToken, login, setToken, setUserData } from '../../api/usersAPI';
 
 import clsx from 'clsx';
 import { useForm } from 'react-hook-form';
 
 export default function Login() {
+	const navigate = useNavigate();
 	const {
 		handleSubmit,
 		register,
@@ -13,8 +16,15 @@ export default function Login() {
 
 	async function onSubmit(data) {
 		try {
-			console.log(data);
+			const { accessToken, refreshToken } = await login(
+				data.username,
+				data.password
+			);
+			setToken(accessToken, refreshToken);
+			const user = decodeToken(accessToken);
+			setUserData(user);
 			ToastSuccess('Login successful');
+			navigate('/');
 		} catch (error) {
 			ToastError('Invalid username or password');
 			console.error('[login error]', error);
@@ -31,9 +41,9 @@ export default function Login() {
 				<div className="registration">
 					<div className="p-5">
 						<div className="d-flex flex-column align-items-center">
-							<a href="/index.html">
+							<Link to={'/'}>
 								<img src="/logo.png" alt="Dev.to" width="65" />
-							</a>
+							</Link>
 							<h1 className="fs-2 fw-bold mt-4">
 								Join the DEV Community
 							</h1>
