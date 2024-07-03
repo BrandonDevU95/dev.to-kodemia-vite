@@ -38,18 +38,22 @@ const getAllAvatarUsers = async () => {
 	return data;
 };
 
-const login = async (userObject) => {
-	let response = await fetch(`${URL_SERVER}/login`, {
+const login = async (username, password) => {
+	const response = await fetch(`${URL_SERVER}/login`, {
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		method: 'POST',
 		body: JSON.stringify({
-			username: userObject.username,
-			password: userObject.password,
+			username,
+			password,
 		}),
 	});
-	let { accessToken, refreshToken } = await response.json();
+	const { accessToken, refreshToken } = await response.json();
+
+	if (!accessToken && !refreshToken) {
+		throw new Error('Invalid username or password');
+	}
 
 	return { accessToken, refreshToken };
 };
