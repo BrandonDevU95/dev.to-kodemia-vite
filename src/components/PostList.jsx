@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getAllPost } from '../api/postsAPI';
+
+import { Link } from 'react-router-dom';
 import LoadingSpinner from './utils/Loading';
 import NoContent from './utils/NoContent';
-import { getUserInfo } from '../api/usersAPI';
 import clsx from 'clsx';
+import { getAllPost } from '../api/postsAPI';
+import { getUserInfo } from '../api/usersAPI';
 
 export default function PostList() {
 	const [posts, setPosts] = useState([]);
@@ -82,13 +84,13 @@ export default function PostList() {
 							</div>
 							<div className="mt-1 ps-4_5">
 								<div>
-									<a
-										href="../../views/guestDetails.html?id=667f146a1269ca1650c98ca0"
+									<Link
+										to={`/post-detail/${post._id}`}
 										className="text-decoration-none">
 										<h2 className="mb-1 fs-4 fw-bold px-2 text-discuss">
 											{post.title}
 										</h2>
-									</a>
+									</Link>
 									<div className="mb-2 d-flex flex-wrap gap-1">
 										{post.tags.map((tag) => (
 											<a
