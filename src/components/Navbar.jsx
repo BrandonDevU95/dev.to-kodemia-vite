@@ -1,11 +1,13 @@
+import { Link } from 'react-router-dom';
+
 export default function Navbar() {
 	return (
 		<header>
 			<nav className="navbar navbar-expand-lg bg-white border border-bottom">
 				<div className="container">
-					<a href="./index.html">
+					<Link to={'/'}>
 						<img src="/logo.png" alt="Dev.to Logo" width="50" />
-					</a>
+					</Link>
 					<button
 						className="navbar-toggler"
 						type="button"
