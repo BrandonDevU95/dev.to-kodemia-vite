@@ -7,7 +7,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import HomePage from './pages/HomePage.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
-import PostDetail from './pages/PostDetail.jsx';
+import PostDetailPage from './pages/PostDetailPage.jsx';
 import ReactDOM from 'react-dom/client';
 import { Toaster } from 'sonner';
 
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/post-detail/:id',
-				element: <PostDetail />,
+				element: <PostDetailPage />,
 			},
 		],
 	},
