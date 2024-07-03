@@ -3,9 +3,8 @@ import { toast } from 'sonner';
 export const ToastSuccess = (message) => {
 	toast(message, {
 		classNames: {
-			toast: 'bg-green-500 text-white',
-			title: 'font-bold',
-			description: 'text-sm',
+			toast: 'border border-success-subtle bg-success text-light',
+			title: 'fw-bold',
 		},
 		icon: (
 			<svg
@@ -29,9 +28,8 @@ export const ToastSuccess = (message) => {
 export const ToastError = (message) => {
 	toast(message, {
 		classNames: {
-			toast: 'bg-red-500 text-white',
-			title: 'font-bold',
-			description: 'text-sm',
+			toast: 'border border-danger-subtle bg-danger text-light',
+			title: 'fw-bold',
 		},
 		icon: (
 			<svg
@@ -56,9 +54,8 @@ export const ToastError = (message) => {
 export const ToastInfo = (message) => {
 	toast(message, {
 		classNames: {
-			toast: 'bg-blue-500 text-white',
-			title: 'font-bold',
-			description: 'text-sm',
+			toast: 'border border-info-subtle bg-info text-light',
+			title: 'fw-bold',
 		},
 		icon: (
 			<svg
@@ -84,9 +81,8 @@ export const ToastInfo = (message) => {
 export const ToastWarning = (message) => {
 	toast(message, {
 		classNames: {
-			toast: 'bg-yellow-500 text-black',
-			title: 'font-bold',
-			description: 'text-sm',
+			toast: 'border border-warning-subtle bg-warning text-dark',
+			title: 'fw-bold',
 		},
 		icon: (
 			<svg
