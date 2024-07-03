@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function LoginAsside() {
 	return (
 		<div className="card border-light-subtle text-start shadow-sm">
@@ -13,11 +15,11 @@ export default function LoginAsside() {
 					<button type="button" className="btn btn-outline-primary">
 						Create account
 					</button>
-					<a href="./views/login.html" className="w-100">
+					<Link to={'/login'} className="w-100">
 						<button type="button" className="btn btn-login w-100">
 							Log in
 						</button>
-					</a>
+					</Link>
 				</div>
 			</div>
 		</div>
