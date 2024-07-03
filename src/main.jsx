@@ -6,6 +6,7 @@ import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import HomePage from './pages/HomePage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
 import PostDetailPage from './pages/PostDetailPage.jsx';
 import ReactDOM from 'react-dom/client';
@@ -28,13 +29,13 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/login',
-		element: <p>Login</p>,
+		element: <LoginPage />,
 	},
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<>
-		<Toaster />
+		<Toaster position="top-right" />
 		<RouterProvider router={router} />
 	</>
 );
