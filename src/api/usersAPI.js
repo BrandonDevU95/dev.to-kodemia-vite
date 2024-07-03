@@ -81,7 +81,9 @@ const setUserData = (user) => {
 };
 
 const getUserData = () => {
-	return JSON.parse(localStorage.getItem(USER));
+	const user = JSON.parse(localStorage.getItem(USER));
+	if (!user) return null;
+	return user;
 };
 
 const decodeToken = (token) => {
