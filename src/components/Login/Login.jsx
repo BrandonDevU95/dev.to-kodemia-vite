@@ -251,6 +251,7 @@ export default function Login() {
 
 									<input
 										type="password"
+										value={'kev02937@'}
 										className={clsx('form-control mt-2', {
 											'border border-danger':
 												errors.root?.credentials ||
