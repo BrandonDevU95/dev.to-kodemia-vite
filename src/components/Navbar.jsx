@@ -38,13 +38,13 @@ export default function Navbar() {
 							</div>
 						</form>
 						<div className="ms-auto">
-							<a
+							<Link
 								className="text-decoration-none pe-2"
-								href="./views/login.html">
+								to={'/login'}>
 								<button type="button" className="btn btn-login">
 									Log in
 								</button>
-							</a>
+							</Link>
 							<button
 								type="button"
 								className="btn btn-outline-primary">
