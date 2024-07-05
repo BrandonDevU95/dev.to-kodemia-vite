@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function FooterAsside() {
 	return (
 		<footer className="mt-4 fs-6 text-secondary">
