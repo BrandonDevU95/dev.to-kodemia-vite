@@ -4,21 +4,27 @@ import LastPostRight from '../components/RightAsside/LastPostRight';
 import LoginAsside from '../components/LeftAsside/LoginAsside';
 import ModeratorAsside from '../components/LeftAsside/ModeratorAsside';
 import NavigationAsside from '../components/LeftAsside/NavigationAsside';
+import NewslatterAsside from '../components/LeftAsside/NewslatterAsside';
 import PopularTags from '../components/LeftAsside/PopularTags';
 import PostList from '../components/PostList';
 import TrendListRight from '../components/RightAsside/TrendListRight';
+import { getUserData } from '../api/usersAPI';
+import { useState } from 'react';
 
 export default function HomePage() {
+	const [user, setUser] = useState(getUserData());
+
 	return (
 		<main className="py-3">
 			<div className="container">
 				<div className="row">
 					<div className="col">
 						<aside>
-							<LoginAsside />
+							{!user && <LoginAsside />}
 							<NavigationAsside />
 							<PopularTags />
-							<ModeratorAsside />
+							{!user ? <ModeratorAsside /> : <NewslatterAsside />}
+
 							<FooterAsside />
 						</aside>
 					</div>
