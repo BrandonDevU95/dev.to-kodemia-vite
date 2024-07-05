@@ -1,44 +1,9 @@
-import { useEffect, useState } from 'react';
-
 import { Link } from 'react-router-dom';
-import LoadingSpinner from './utils/Loading';
 import NoContent from './utils/NoContent';
 import clsx from 'clsx';
-import { getAllPost } from '../api/postsAPI';
-import { getUserInfo } from '../api/usersAPI';
 
-export default function PostList() {
-	const [posts, setPosts] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
-
-	useEffect(() => {
-		const fetchPostsAndUsers = async () => {
-			try {
-				const postsData = await getAllPost();
-
-				const postsWithAvatars = await Promise.all(
-					postsData.map(async (post) => {
-						const userInfo = await getUserInfo(post.author);
-						return { ...post, avatar: userInfo.avatar };
-					})
-				);
-
-				setPosts(postsWithAvatars);
-			} catch (error) {
-				console.log(error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		fetchPostsAndUsers();
-	}, []);
-
-	if (isLoading) {
-		return <LoadingSpinner />;
-	}
-
-	if (!isLoading && posts.length === 0) {
+export default function PostList({ posts }) {
+	if (posts.length === 0) {
 		return <NoContent />;
 	}
 
@@ -93,12 +58,12 @@ export default function PostList() {
 									</Link>
 									<div className="mb-2 d-flex flex-wrap gap-1">
 										{post.tags.map((tag) => (
-											<a
+											<Link
 												key={tag}
-												href="../../views/tags.html?tag=UI"
+												to={`/tags/${tag}`}
 												className="text-decoration-none text-secondary px-2 py-1 tags-post rounded">
 												#{tag}
-											</a>
+											</Link>
 										))}
 									</div>
 								</div>
