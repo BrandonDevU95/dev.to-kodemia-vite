@@ -5,6 +5,7 @@ import './index.css';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
+import CreatePosts from './pages/CreatePosts.jsx';
 import HomePage from './pages/HomePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
 	{
 		path: '/login',
 		element: <LoginPage />,
+	},
+	{
+		path: '/create-post',
+		element: <CreatePosts />,
 	},
 ]);
 
