@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { getAllTags } from '../../api/postsAPI.js';
+
+import { Link } from 'react-router-dom';
 import LoadingSpinner from '../utils/Loading.jsx';
 import NoContent from '../utils/NoContent.jsx';
+import { getAllTags } from '../../api/postsAPI.js';
 
 export default function PopularTags() {
 	const [tags, setTags] = useState([]);
@@ -30,11 +32,11 @@ export default function PopularTags() {
 					<div
 						key={tag}
 						className="py-2 px-3 link-nav rounded border-0 text-star">
-						<a
-							href="#"
+						<Link
+							to={`/tags/${tag}`}
 							className="text-decoration-none d-flex align-items-center">
 							#{tag}
-						</a>
+						</Link>
 					</div>
 				))}
 			</div>
