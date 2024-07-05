@@ -1,3 +1,9 @@
+import {
+	getAllPost,
+	getLastPosts,
+	getPostsByRelevant,
+	getPostsMoreReactions,
+} from '../api/postsAPI';
 import { getUserData, getUserInfo } from '../api/usersAPI';
 import { useEffect, useState } from 'react';
 
@@ -14,35 +20,65 @@ import NoContent from '../components/utils/NoContent';
 import PopularTags from '../components/LeftAsside/PopularTags';
 import PostList from '../components/PostList';
 import TrendListRight from '../components/RightAsside/TrendListRight';
-import { getAllPost } from '../api/postsAPI';
 
 export default function HomePage() {
 	const user = getUserData();
 	const [posts, setPosts] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
+	const fetchPostsAndUsers = async () => {
+		try {
+			const postsData = await getAllPost();
+
+			const postsWithAvatars = await Promise.all(
+				postsData.map(async (post) => {
+					const userInfo = await getUserInfo(post.author);
+					return { ...post, avatar: userInfo.avatar };
+				})
+			);
+
+			setPosts(postsWithAvatars);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	useEffect(() => {
-		const fetchPostsAndUsers = async () => {
-			try {
-				const postsData = await getAllPost();
-
-				const postsWithAvatars = await Promise.all(
-					postsData.map(async (post) => {
-						const userInfo = await getUserInfo(post.author);
-						return { ...post, avatar: userInfo.avatar };
-					})
-				);
-
-				setPosts(postsWithAvatars);
-			} catch (error) {
-				console.log(error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
 		fetchPostsAndUsers();
 	}, []);
+
+	const handleFilterPosts = async (filterType) => {
+		try {
+			let postsData;
+			switch (filterType) {
+				case 'relevant':
+					postsData = await getPostsByRelevant();
+					break;
+				case 'latest':
+					postsData = await getLastPosts(3);
+					break;
+				case 'top':
+					postsData = await getPostsMoreReactions(3);
+					break;
+				default:
+					await fetchPostsAndUsers();
+					return;
+			}
+
+			const postsWithAvatars = await Promise.all(
+				postsData.map(async (post) => {
+					const userInfo = await getUserInfo(post.author);
+					return { ...post, avatar: userInfo.avatar };
+				})
+			);
+
+			setPosts(postsWithAvatars);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	if (isLoading) {
 		return <LoadingSpinner />;
@@ -62,12 +98,11 @@ export default function HomePage() {
 							<NavigationAsside />
 							<PopularTags />
 							{!user ? <ModeratorAsside /> : <NewslatterAsside />}
-
 							<FooterAsside />
 						</aside>
 					</div>
 					<div className="col-6">
-						<FilterPosts />
+						<FilterPosts onFilter={handleFilterPosts} />
 						<PostList posts={posts} />
 					</div>
 					<div className="col">
