@@ -2,6 +2,7 @@ import { getUserData, getUserInfo } from '../api/usersAPI';
 import { useEffect, useState } from 'react';
 
 import CategoriesRight from '../components/RightAsside/CategoriesRight';
+import FilterPosts from '../components/FilterPosts';
 import FooterAsside from '../components/LeftAsside/FooterAsside';
 import LastPostRight from '../components/RightAsside/LastPostRight';
 import LoadingSpinner from '../components/utils/Loading';
@@ -66,6 +67,7 @@ export default function HomePage() {
 						</aside>
 					</div>
 					<div className="col-6">
+						<FilterPosts />
 						<PostList posts={posts} />
 					</div>
 					<div className="col">
