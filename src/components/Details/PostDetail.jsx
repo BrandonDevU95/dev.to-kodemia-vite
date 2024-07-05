@@ -87,7 +87,7 @@ export default function PostDetail({ post }) {
 								{post.tags.map((tag, index) => (
 									<Link
 										key={index}
-										to={`/tag/${tag}`}
+										to={`/tags/${tag}`}
 										className="text-decoration-none text-secondary px-2 py-1 tags-post rounded">
 										#{tag}
 									</Link>
