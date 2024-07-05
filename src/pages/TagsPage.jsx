@@ -2,7 +2,7 @@ import { getAllAvatarUsers, getUserData, getUserInfo } from '../api/usersAPI';
 import { useEffect, useState } from 'react';
 
 import CategoriesRight from '../components/RightAsside/CategoriesRight';
-import FilterPosts from '../components/FilterPosts';
+import FilterPostsTags from '../components/FilterPostsTags';
 import FooterAsside from '../components/LeftAsside/FooterAsside';
 import PopularTags from '../components/LeftAsside/PopularTags';
 import PostList from '../components/PostList';
@@ -130,7 +130,7 @@ export default function TagsPage() {
 					</div>
 					<div className="col-7">
 						<header className="mb-2">
-							<FilterPosts />
+							<FilterPostsTags />
 						</header>
 						<PostList posts={posts} />
 					</div>
