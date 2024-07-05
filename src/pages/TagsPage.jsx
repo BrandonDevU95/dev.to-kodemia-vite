@@ -1,3 +1,4 @@
+import { Link, useParams } from 'react-router-dom';
 import { getAllAvatarUsers, getUserData, getUserInfo } from '../api/usersAPI';
 import { useEffect, useState } from 'react';
 
@@ -8,7 +9,6 @@ import PopularTags from '../components/LeftAsside/PopularTags';
 import PostList from '../components/PostList';
 import SocialLinksAsside from '../components/LeftAsside/SocialLinksAsside';
 import { getAllPostByTag } from '../api/postsAPI';
-import { useParams } from 'react-router-dom';
 
 export default function TagsPage() {
 	const [user, setUser] = useState([]);
@@ -57,12 +57,12 @@ export default function TagsPage() {
 							{user && (
 								<>
 									<div className="mt-2">
-										<a
-											href="./create.html"
+										<Link
+											to={'/create-post'}
 											type="button"
 											className="btn btn-primary btn-sm">
 											Create Post
-										</a>
+										</Link>
 									</div>
 									<hr />
 								</>
