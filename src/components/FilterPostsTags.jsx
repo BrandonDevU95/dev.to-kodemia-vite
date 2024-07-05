@@ -1,4 +1,4 @@
-export default function FilterPosts() {
+export default function FilterPostsTags() {
 	return (
 		<nav className="d-flex justify-content-between">
 			<div>
