@@ -92,13 +92,13 @@ export default function Navbar() {
 function UserNavbar({ user, onLogout }) {
 	return (
 		<div className="ms-auto d-flex align-items-center">
-			<a href="./create.html" className="text-decoration-none">
+			<Link to={'/create-post'} className="text-decoration-none">
 				<button
 					type="button"
 					className="btn btn-outline-primary fw-semibold mx-1">
 					Create Post
 				</button>
-			</a>
+			</Link>
 			<button
 				type="button"
 				className="btn btn-primary position-relative social-icon border-0 mx-1">
