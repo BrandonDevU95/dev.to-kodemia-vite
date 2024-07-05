@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
 import PostDetailPage from './pages/PostDetailPage.jsx';
 import ReactDOM from 'react-dom/client';
+import TagsPage from './pages/TagsPage.jsx';
 import { Toaster } from 'sonner';
 
 const router = createBrowserRouter([
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
 			{
 				path: '/post-detail/:id',
 				element: <PostDetailPage />,
+			},
+			{
+				path: '/tags/:tags',
+				element: <TagsPage />,
 			},
 		],
 	},
