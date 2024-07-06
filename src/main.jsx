@@ -14,6 +14,7 @@ import PostDetailPage from './pages/PostDetailPage.jsx';
 import ReactDOM from 'react-dom/client';
 import TagsPage from './pages/TagsPage.jsx';
 import { Toaster } from 'sonner';
+import UserProfile from './pages/UserProfile.jsx';
 
 const router = createBrowserRouter([
 	{
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
 			{
 				path: '/tags/:tags',
 				element: <TagsPage />,
+			},
+			{
+				path: '/profile',
+				element: <UserProfile />,
 			},
 		],
 	},
