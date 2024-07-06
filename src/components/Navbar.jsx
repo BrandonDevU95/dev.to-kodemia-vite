@@ -137,12 +137,12 @@ function UserNavbar({ user, onLogout }) {
 						</li>
 						<hr className="my-1" />
 						<li>
-							<a
+							<Link
+								to={'/profile'}
 								id="profile"
-								className="dropdown-item btn social-icon rounded"
-								href="./user/profile.html">
+								className="dropdown-item btn social-icon rounded">
 								Profile
-							</a>
+							</Link>
 						</li>
 						<li>
 							<a
