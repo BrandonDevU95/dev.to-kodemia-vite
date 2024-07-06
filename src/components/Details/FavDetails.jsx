@@ -1,4 +1,26 @@
-export default function FavDetails({ reactions, comments }) {
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastError, ToastSuccess } from '../utils/notifications';
+
+import { deletePost } from '../../api/postsAPI';
+
+export default function FavDetails({ reactions, comments, isAuthor, postId }) {
+	const navigate = useNavigate();
+	async function handleDeletePost() {
+		const fonfirmDelete = window.confirm(
+			'Are you sure you want to delete this post?'
+		);
+
+		if (fonfirmDelete) {
+			const data = await deletePost(postId);
+			if (data) {
+				ToastSuccess('Post deleted successfully');
+				navigate('/');
+			} else {
+				ToastError('Error deleting post');
+			}
+		}
+	}
+
 	return (
 		<aside className="w-fav position-relative ms-auto">
 			<div
@@ -27,6 +49,23 @@ export default function FavDetails({ reactions, comments }) {
 						<i className="bi bi-three-dots fs-4"></i>
 					</a>
 				</div>
+				{isAuthor && (
+					<div className="d-flex flex-column align-items-center gap-3">
+						<Link to={`/edit-post/${postId}`}>
+							<button
+								className="btn btn-primary w-100"
+								type="button">
+								<i className="bi bi-pencil"></i>
+							</button>
+						</Link>
+						<button
+							className="btn btn-danger w-100"
+							type="button"
+							onClick={handleDeletePost}>
+							<i className="bi bi-x-lg"></i>
+						</button>
+					</div>
+				)}
 			</div>
 		</aside>
 	);
