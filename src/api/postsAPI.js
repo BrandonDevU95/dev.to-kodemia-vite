@@ -22,8 +22,10 @@ const updatePost = async (postObject, postId) => {
 	const { accessToken, refreshToken } = getToken();
 	if (!accessToken || !refreshToken) return null;
 
+	postObject.updated_at = new Date().toISOString();
+
 	let response = await fetch(`${URL_SERVER}/posts/${postId}`, {
-		method: 'PUT',
+		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: accessToken,
