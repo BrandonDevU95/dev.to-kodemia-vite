@@ -5,7 +5,8 @@ import './index.css';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import CreatePosts from './pages/CreatePosts.jsx';
+import CreatePostsPage from './pages/CreatePostsPage.jsx';
+import EditPostPage from './pages/EditPostPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
@@ -39,7 +40,11 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/create-post',
-		element: <CreatePosts />,
+		element: <CreatePostsPage />,
+	},
+	{
+		path: '/edit-post/:id',
+		element: <EditPostPage />,
 	},
 ]);
 
