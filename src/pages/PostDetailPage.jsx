@@ -1,3 +1,4 @@
+import { getUserData, getUserInfo } from '../api/usersAPI';
 import { useEffect, useState } from 'react';
 
 import FavDetails from '../components/Details/FavDetails';
@@ -6,13 +7,14 @@ import NoContent from '../components/utils/NoContent';
 import PostDetail from '../components/Details/PostDetail';
 import TrendingDetails from '../components/Details/TrendingDetails';
 import { getPostById } from '../api/postsAPI';
-import { getUserInfo } from '../api/usersAPI';
 import { useParams } from 'react-router-dom';
 
 export default function PostDetailPage() {
+	const user = getUserData();
 	const { id } = useParams();
 	const [post, setPost] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const isAuthor = post.author === user.user_id ? true : false;
 
 	useEffect(() => {
 		const fetchPostAndUsers = async () => {
@@ -51,6 +53,8 @@ export default function PostDetailPage() {
 						<FavDetails
 							reactions={post.numReactions}
 							comments={post.numComments}
+							isAuthor={isAuthor}
+							postId={post._id}
 						/>
 					</div>
 					<div className="col-8">
